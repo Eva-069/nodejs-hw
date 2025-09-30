@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
-import helmet from 'helmet';
+//import helmet from 'helmet';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(helmet());
+//app.use(helmet());
 app.use(
   pino({
     level: 'info',
