@@ -1,8 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
-
 import helmet from 'helmet';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 const app = express();
 
