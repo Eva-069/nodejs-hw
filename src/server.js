@@ -33,7 +33,7 @@ app.use(
 
 
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 3030;
 
 app.get('/notes', (req, res) => {
   res.status(200).json({ message: "Retrieved all notes" });
