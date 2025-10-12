@@ -1,9 +1,9 @@
-// src/models/student.js
+
 
 import { Schema } from 'mongoose';
 import { model } from 'mongoose';
 
-const notesSchema = new Schema(
+const noteSchema = new Schema(
   {
     title: {
       type: String,
@@ -13,7 +13,7 @@ const notesSchema = new Schema(
     content: {
       type: String,
       trim: true,
-      required: true,
+      default:'',
     },
     tag: {
       type: String,
@@ -28,4 +28,4 @@ const notesSchema = new Schema(
 );
 
 
-export const Notes = model('Notes', notesSchema);
+export const Note = model('Note', noteSchema);
