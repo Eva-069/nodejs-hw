@@ -2,10 +2,13 @@
   import createHttpError from 'http-errors';
 
   export const getAllNotes = async (req, res) => {
-    //const notes = await Note.find();
 
     const { page = 1, perPage = 10, tag, search } = req.query;
-    const skip = (page - 1) * perPage;
+
+    const pageNumber = Number(page);
+    const perPageNumber = Number(perPage);
+
+    const skip = (pageNumber - 1) * perPageNumber;
     const notesQuery = Note.find();
 
     if (tag) {
@@ -16,16 +19,16 @@
       $text:{$search: search}
     });
 }
-    const [totalItems, notes] = await Promise.all([
+    const [totalNotes, notes] = await Promise.all([
       notesQuery.clone().countDocuments(),
       notesQuery.skip(skip).limit(perPage),
     ]);
 
-    const totalPages = Math.ceil(totalItems / perPage);
+    const totalPages = Math.ceil(totalNotes / perPage);
     res.status(200).json({
-      page,
-      perPage,
-      totalItems,
+      page: pageNumber,
+      perPage:perPageNumber,
+      totalNotes,
       totalPages,
       notes
     });
@@ -33,18 +36,18 @@
 
   export const getNoteById = async(req, res, next) => {
     const { noteId } = req.params;
-    const notes = await Note.findById(noteId);
+    const note = await Note.findById(noteId);
 
-    if (!notes) {
+    if (!note) {
       next(createHttpError(404,'Note not found'));
       return;
     }
-    res.status(200).json(notes);
+    res.status(200).json(note);
   };
 
   export const createNote = async (req, res) => {
-    const notes = await Note.create(req.body);
-    res.status(201).json(notes);
+    const note = await Note.create(req.body);
+    res.status(201).json(note);
   };
 
   export const deleteNote = async (req, res, next) => {
