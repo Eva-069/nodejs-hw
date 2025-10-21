@@ -21,10 +21,10 @@
 }
     const [totalNotes, notes] = await Promise.all([
       notesQuery.clone().countDocuments(),
-      notesQuery.skip(skip).limit(perPage),
+      notesQuery.skip(skip).limit(perPageNumber),
     ]);
 
-    const totalPages = Math.ceil(totalNotes / perPage);
+    const totalPages = Math.ceil(totalNotes / perPageNumber);
     res.status(200).json({
       page: pageNumber,
       perPage:perPageNumber,
