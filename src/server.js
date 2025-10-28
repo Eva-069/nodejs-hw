@@ -8,6 +8,8 @@ import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import notesRoutes from './routes/notesRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -20,8 +22,15 @@ app.use(express.json({
   limit: '100kb',
 }));
 app.use(cors());
+app.use(cookieParser());
+
 //app.use(helmet());
 app.use(notesRoutes);
+app.use(authRoutes);
+app.use(notesRoutes);
+
+
+
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
