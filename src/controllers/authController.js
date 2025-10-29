@@ -25,7 +25,7 @@ export const registerUser = async (req, res, next) => {
 
   setSessionCookies(res, newSession);
 
-  res.status(201).json({newUser});
+  res.status(201).json(newUser);
 };
 export const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
@@ -49,18 +49,22 @@ export const loginUser = async (req, res, next) => {
    res.status(200).json(user);
 };
 
-export const logoutUser = async (req, res) => {
-  const { sessionId } = req.cookies;
-  if (sessionId) {
-    await Session.deleteOne({ _id: sessionId });
+export const logoutUser = async (req, res, next) => {
+  try {
+    const { sessionId } = req.cookies;
+
+    if (sessionId) {
+      await Session.deleteOne({ _id: sessionId });
+    }
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.clearCookie("sessionId");
+
+    res.status(204).end();
+  } catch (error) {
+    next(error);
   }
-
-  res.clearCookie('sessionId');
-  res.clearCookie('accessToken');
-  res.clearCookie('refreshToken');
-
-  res.status(204).send();
-
 };
 
 export const refreshUserSession = async (req, res, next) => {
