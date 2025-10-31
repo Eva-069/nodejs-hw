@@ -27,7 +27,7 @@ app.use(cookieParser());
 //app.use(helmet());
 app.use(notesRoutes);
 app.use(authRoutes);
-app.use(notesRoutes);
+
 
 
 
